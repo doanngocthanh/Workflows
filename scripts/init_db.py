@@ -7,8 +7,8 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 from sqlalchemy import create_engine
-from app.database import Base, DATABASE_URL
-from models.workflow import Workflow, WorkflowStep, WorkflowExecution
+from app.database import Base , DATABASE_URL
+from app.models.workflow import Workflow, WorkflowStep, WorkflowExecution
 
 def init_database():
     """Initialize database with tables"""

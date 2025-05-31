@@ -8,7 +8,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 from sqlalchemy.orm import sessionmaker
 from app.database import engine
-from models.workflow import Workflow, WorkflowStep
+from app.models.workflow import Workflow, WorkflowStep
 
 def seed_sample_workflows():
     """Create sample workflows for testing"""

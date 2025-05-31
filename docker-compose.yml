@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: workflow_postgres
+    environment:
+      POSTGRES_DB: workflows
+      POSTGRES_USER: puser
+      POSTGRES_PASSWORD: pPassword
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U puser -d workflows"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Workflow Engine Application
+  workflow-engine:
+    build: .
+    container_name: workflow_app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://puser:pPassword@postgres:5432/workflows
+      - DEBUG=true
+    volumes:
+      - ./data:/app/data
+      - ./uploads:/app/uploads
+      - ./processed:/app/processed
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # pgAdmin for database management (optional)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: workflow_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: dnt.doanngocthanh@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+

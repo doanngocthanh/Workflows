@@ -1,11 +1,9 @@
 # models/workflow.py
 from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, JSON, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
+
 from sqlalchemy.orm import relationship
 from datetime import datetime
-
-Base = declarative_base()
-
+from database import Base 
 class Workflow(Base):
     __tablename__ = "workflows"
     
