@@ -6,23 +6,18 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from pathlib import Path
 import sys
-# Import routers
-# sys.path.append(str(Path(__file__).parent.parent / "api"))
-
 from api.workflows import router as workflows_router
-# Add the parent directory to sys.path to allow importing from 'api'
-
-# from app.api.handlers import router as handlers_router
-# from app.api.executions import router as executions_router
-
-# Import core components
 from core.registry import HandlerRegistry
 from database import engine, Base
-
-# Import all models so they are registered with SQLAlchemy's Base before table creation
-import models  # Ensure this imports all model classes (e.g., from models import *)
-
 from pathlib import Path
+# Import routers
+# sys.path.append(str(Path(__file__).parent.parent / "api"))
+# Add the parent directory to sys.path to allow importing from 'api'
+# from app.api.handlers import router as handlers_router
+# from app.api.executions import router as executions_router
+# Import core components
+# Import all models so they are registered with SQLAlchemy's Base before table creation
+# Ensure this imports all model classes (e.g., from models import *)
 # from workflows import router as workflows_router
 
 app = FastAPI(
