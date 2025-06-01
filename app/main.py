@@ -59,9 +59,9 @@ async def startup_event():
     try:
         # Ensure all models are imported before this line
         # Set the schema to "workflows" before creating tables
-        with engine.connect() as connection:
-            connection.execute('CREATE SCHEMA IF NOT EXISTS workflows')
-        Base.metadata.schema = "workflows"
+        # with engine.connect() as connection:
+        #     connection.execute('CREATE SCHEMA IF NOT EXISTS workflows')
+        # Base.metadata.schema = "workflows"
         Base.metadata.create_all(bind=engine)
         print("✅ Database tables created successfully.")
     except Exception as e:
